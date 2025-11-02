@@ -7,6 +7,7 @@ import {
     faMapMarkerAlt,
     faPhone
 } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 function Centers() {
     return (
@@ -72,9 +73,9 @@ function Centers() {
                                 <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">Full Detailing</span>
                             </div>
                             <p className="text-green-600 font-medium mb-2">Next: Today 2:00 PM</p>
-                            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md w-full">
+                            <Link to={'/centerDetails'} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md w-full">
                                 Book Now
-                            </button>
+                            </Link>
                         </div>
                     </div>
 

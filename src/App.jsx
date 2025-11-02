@@ -8,6 +8,7 @@ import AdminDashboard from './admin/containers/AdminDashboard'
 import OwnerLayouts from './Layouts/OwnerLayouts'
 import OwnerDashboard from './owner/Containers/OwnerDashboard'
 import Centers from './user/container/Centers'
+import UserCenterDetails from './user/container/UserCenterDetails'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route index element={<MainUserDashboard />} />
           <Route path="services" element={<UserServices />} />
           <Route path='centers' element={<Centers />} />
+          <Route path='centerDetails' element={<UserCenterDetails />} />
         </Route>
 
         <Route path="/owner" element={<OwnerLayouts />}>
