@@ -12,7 +12,7 @@ function Footer() {
                     <div className="text-center md:text-left max-w-md">
                         <h2 className="text-2xl font-semibold mb-2">CarWash Pro</h2>
                         <p className="text-gray-300 text-sm">
-                            Your trusted partner for professional car wash services. Quality, convenience, and customer satisfaction guaranteed.
+                            Your trusted partner for car wash services. Quality, convenience, and customer satisfaction guaranteed.
                         </p>
                     </div>
 

@@ -10,9 +10,9 @@ function HeaderUser() {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Services', path: '/services' },
     { name: 'Centers', path: '/centers' },
     { name: 'About', path: '/about' },
+    { name: 'Contact Us', path: '/contactus' },
     { name: 'Sign In', path: '/signin', isButton: true },
   ];
 

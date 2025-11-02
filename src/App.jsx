@@ -9,6 +9,8 @@ import OwnerLayouts from './Layouts/OwnerLayouts'
 import OwnerDashboard from './owner/Containers/OwnerDashboard'
 import Centers from './user/container/Centers'
 import UserCenterDetails from './user/container/UserCenterDetails'
+import UserAboutUs from './user/container/UserAboutUs'
+import UserContactUs from './user/container/UserContactUs'
 
 function App() {
   return (
@@ -16,9 +18,10 @@ function App() {
       <Routes>
         <Route path="/" element={<UserLayouts />}>
           <Route index element={<MainUserDashboard />} />
-          <Route path="services" element={<UserServices />} />
+          <Route path="contactus" element={<UserContactUs />} />
           <Route path='centers' element={<Centers />} />
           <Route path='centerDetails' element={<UserCenterDetails />} />
+          <Route path='about' element={<UserAboutUs />} />
         </Route>
 
         <Route path="/owner" element={<OwnerLayouts />}>
