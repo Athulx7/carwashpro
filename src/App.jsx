@@ -20,7 +20,7 @@ function App() {
           <Route index element={<MainUserDashboard />} />
           <Route path="contactus" element={<UserContactUs />} />
           <Route path='centers' element={<Centers />} />
-          <Route path='centerDetails' element={<UserCenterDetails />} />
+          <Route path='centerDetails/:id' element={<UserCenterDetails />} />
           <Route path='about' element={<UserAboutUs />} />
         </Route>
 

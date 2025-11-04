@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
     faMapMarkerAlt,
     faPhoneAlt,
@@ -9,11 +9,34 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import UserCenterCustomerReview from "../components/UserCenterCustomerReview"
-import { Link } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
+import { getSelectedCenterAPI } from "../../Services/allAPI"
 
 function UserCenterDetails() {
     const [showBooking, setShowBooking] = useState(false)
     const [selectedService, setSelectedService] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
+
+    const navigate = useNavigate()
+    const { id } = useParams()
+
+    const [centerData, setCenterData] = useState([])
+
+    const getSelecetdCEnterDetails = async () => {
+        setIsLoading(true)
+        try {
+            const result = await getSelectedCenterAPI(id)
+            setCenterData(result.data)
+        }
+        catch (err) {
+            console.log("Error in fetching selected center details", err)
+        }
+        setIsLoading(false)
+    }
+
+    useEffect(() => {
+        getSelecetdCEnterDetails()
+    }, [id])
 
     const services = [
         {
@@ -58,42 +81,43 @@ function UserCenterDetails() {
                 <p><Link>Home</Link><FontAwesomeIcon icon={faChevronRight} /><Link>  Centers </Link> <FontAwesomeIcon icon={faChevronRight} /><span> Center Name</span></p>
             </div>
 
-            <div className="flex flex-col lg:flex-row bg-gray-50 min-h-screen relative md:p-">
-                {/* ===== LEFT SCROLLABLE SECTION ===== */}
+            <div className="flex flex-col lg:flex-row bg-gray-50 min-h-screen relative">
+                {/* LEFT SCROLLABLE SECTION */}
                 <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-8">
 
-                    <div className="flex flex-col lg:flex-row gap-4 bg-white rounded-xl md:p-5">
-
+                    <div className="flex flex-col lg:flex-row gap-4 bg-white rounded-xl md:p-5 shadow-sm">
                         <div className="lg:w-2/3 w-full">
                             <img
-                                src="/images/homeimage.png"
-                                alt="Main Center"
+                                src={centerData?.image1 ? `/uploads/${centerData.image1}` : "/images/homeimage.png"}
+                                alt={centerData?.washcentername}
                                 className="w-full h-96 object-cover rounded-xl shadow"
                             />
                         </div>
 
                         <div className="lg:w-1/3 w-full grid grid-cols-2 gap-3">
                             <img
-                                src="/images/homeimage.png"
+                                src={centerData?.image2 ? `/uploads/${centerData.image2}` : "/images/homeimage.png"}
                                 alt="Gallery 1"
                                 className="w-full h-44 object-cover rounded-xl shadow"
                             />
                             <img
-                                src="/images/homeimage.png"
+                                src={centerData?.image3 ? `/uploads/${centerData.image3}` : "/images/homeimage.png"}
                                 alt="Gallery 2"
                                 className="w-full h-44 object-cover rounded-xl shadow"
                             />
-                            <img
-                                src="/images/homeimage.png"
-                                alt="Gallery 3"
-                                className="col-span-2 w-full h-44 object-cover rounded-xl shadow"
-                            />
+                            <iframe
+                                src={centerData?.map}
+                                title="Google Map"
+                                className="col-span-2 w-full h-44 rounded-xl shadow border-0"
+                                allowFullScreen
+                                loading="lazy"
+                            ></iframe>
                         </div>
                     </div>
 
                     <div className="bg-white rounded-xl p-5">
                         <h2 className="text-2xl font-bold text-gray-800 mb-1">
-                            Premium Auto Spa
+                            {centerData?.washcentername || "Car Wash Center"}
                         </h2>
                         <p className="text-yellow-500">
                             <FontAwesomeIcon icon={faStar} /> 4.8{" "}
@@ -103,15 +127,15 @@ function UserCenterDetails() {
                         <div className="mt-4 space-y-2 text-gray-700">
                             <p>
                                 <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2" />
-                                123 Main Street, Downtown
+                                {centerData?.location || "Unknown Location"}
                             </p>
                             <p>
                                 <FontAwesomeIcon icon={faPhoneAlt} className="mr-2" />
-                                (555) 123-4567
+                                {centerData?.contactno || "No contact"}
                             </p>
                             <p>
                                 <FontAwesomeIcon icon={faEnvelope} className="mr-2" />
-                                info@premiumautospa.com
+                                {centerData?.owneremail || "No email"}
                             </p>
                             <p>
                                 <FontAwesomeIcon icon={faClock} className="mr-2" />
@@ -119,11 +143,10 @@ function UserCenterDetails() {
                             </p>
                         </div>
 
-                        <div className="mt-6 text-gray-700 leading-relaxed">
-                            Premium Auto Spa is your premier destination for professional car
-                            care services. We provide top-quality interior and exterior cleaning
-                            using eco-friendly products and state-of-the-art equipment.
+                        <div className="mt-6 text-gray-700 leading-relaxed max-h-48 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-blue-400 scrollbar-track-gray-100 rounded-lg">
+                            {centerData?.about || "No description available for this center."}
                         </div>
+
                     </div>
 
                     <div className="bg-white rounded-xl p-5">
